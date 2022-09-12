@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/thomas/SLAM2/utils/vectors.cc
+math.h
+-
+iostream
+-
+ostream
+-
+vectors.h
+/home/thomas/SLAM2/utils/vectors.h
+
+/home/thomas/SLAM2/utils/vectors.h
+math.h
+-
+iostream
+-
+ostream
+-
+

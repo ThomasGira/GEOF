@@ -1,0 +1,2 @@
+/usr/bin/ar qc libViz.a  CMakeFiles/Viz.dir/visualizer.cc.o
+/usr/bin/ranlib libViz.a

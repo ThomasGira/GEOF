@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/VecTest.dir/utils/vectors_test.cc.o  -o VecTest  utils/libvectors.a 
