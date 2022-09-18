@@ -7,7 +7,12 @@
 namespace geoff {
 namespace common {
 
+Vector2d::Vector2d(){
+    this -> x = 0.0;
+    this -> y = 0.0;
+    this -> rho = 0.0;
 
+}
 Vector2d::Vector2d(float x, float y, float rho) {
     this -> x = x;
     this -> y = y;
@@ -104,6 +109,9 @@ void Vector2d::print(){
 
     std::cout << "X:  " << x_str << " Y:  " << y_str << " Rho:  " << rho_str << std::endl;
 };
+cv::Point Vector2d::to_cv_point(){
+    return cv::Point((int) this -> x, (int) this ->y);
+}
 
 }  // namespace common
 }  // namespace geoff

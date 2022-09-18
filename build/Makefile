@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named KeyTest
+
+# Build rule for target.
+KeyTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 KeyTest
+.PHONY : KeyTest
+
+# fast build rule for target.
+KeyTest/fast:
+	$(MAKE) -f CMakeFiles/KeyTest.dir/build.make CMakeFiles/KeyTest.dir/build
+.PHONY : KeyTest/fast
+
+#=============================================================================
+# Target rules for targets named CarTest
+
+# Build rule for target.
+CarTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CarTest
+.PHONY : CarTest
+
+# fast build rule for target.
+CarTest/fast:
+	$(MAKE) -f CMakeFiles/CarTest.dir/build.make CMakeFiles/CarTest.dir/build
+.PHONY : CarTest/fast
+
+#=============================================================================
 # Target rules for targets named CollisionTest
 
 # Build rule for target.
@@ -188,6 +214,46 @@ vectors/fast:
 	$(MAKE) -f utils/CMakeFiles/vectors.dir/build.make utils/CMakeFiles/vectors.dir/build
 .PHONY : vectors/fast
 
+#=============================================================================
+# Target rules for targets named keyboard
+
+# Build rule for target.
+keyboard: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 keyboard
+.PHONY : keyboard
+
+# fast build rule for target.
+keyboard/fast:
+	$(MAKE) -f navigation/CMakeFiles/keyboard.dir/build.make navigation/CMakeFiles/keyboard.dir/build
+.PHONY : keyboard/fast
+
+simulator/car_test.o: simulator/car_test.cc.o
+
+.PHONY : simulator/car_test.o
+
+# target to build an object file
+simulator/car_test.cc.o:
+	$(MAKE) -f CMakeFiles/CarTest.dir/build.make CMakeFiles/CarTest.dir/simulator/car_test.cc.o
+.PHONY : simulator/car_test.cc.o
+
+simulator/car_test.i: simulator/car_test.cc.i
+
+.PHONY : simulator/car_test.i
+
+# target to preprocess a source file
+simulator/car_test.cc.i:
+	$(MAKE) -f CMakeFiles/CarTest.dir/build.make CMakeFiles/CarTest.dir/simulator/car_test.cc.i
+.PHONY : simulator/car_test.cc.i
+
+simulator/car_test.s: simulator/car_test.cc.s
+
+.PHONY : simulator/car_test.s
+
+# target to generate assembly for a file
+simulator/car_test.cc.s:
+	$(MAKE) -f CMakeFiles/CarTest.dir/build.make CMakeFiles/CarTest.dir/simulator/car_test.cc.s
+.PHONY : simulator/car_test.cc.s
+
 simulator/collision_test.o: simulator/collision_test.cc.o
 
 .PHONY : simulator/collision_test.o
@@ -214,6 +280,33 @@ simulator/collision_test.s: simulator/collision_test.cc.s
 simulator/collision_test.cc.s:
 	$(MAKE) -f CMakeFiles/CollisionTest.dir/build.make CMakeFiles/CollisionTest.dir/simulator/collision_test.cc.s
 .PHONY : simulator/collision_test.cc.s
+
+simulator/key_test.o: simulator/key_test.cc.o
+
+.PHONY : simulator/key_test.o
+
+# target to build an object file
+simulator/key_test.cc.o:
+	$(MAKE) -f CMakeFiles/KeyTest.dir/build.make CMakeFiles/KeyTest.dir/simulator/key_test.cc.o
+.PHONY : simulator/key_test.cc.o
+
+simulator/key_test.i: simulator/key_test.cc.i
+
+.PHONY : simulator/key_test.i
+
+# target to preprocess a source file
+simulator/key_test.cc.i:
+	$(MAKE) -f CMakeFiles/KeyTest.dir/build.make CMakeFiles/KeyTest.dir/simulator/key_test.cc.i
+.PHONY : simulator/key_test.cc.i
+
+simulator/key_test.s: simulator/key_test.cc.s
+
+.PHONY : simulator/key_test.s
+
+# target to generate assembly for a file
+simulator/key_test.cc.s:
+	$(MAKE) -f CMakeFiles/KeyTest.dir/build.make CMakeFiles/KeyTest.dir/simulator/key_test.cc.s
+.PHONY : simulator/key_test.cc.s
 
 simulator/visualizer_test.o: simulator/visualizer_test.cc.o
 
@@ -277,15 +370,24 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... KeyTest"
+	@echo "... CarTest"
 	@echo "... CollisionTest"
 	@echo "... VecTest"
 	@echo "... VizTest"
 	@echo "... simulator"
 	@echo "... visualizer"
 	@echo "... vectors"
+	@echo "... keyboard"
+	@echo "... simulator/car_test.o"
+	@echo "... simulator/car_test.i"
+	@echo "... simulator/car_test.s"
 	@echo "... simulator/collision_test.o"
 	@echo "... simulator/collision_test.i"
 	@echo "... simulator/collision_test.s"
+	@echo "... simulator/key_test.o"
+	@echo "... simulator/key_test.i"
+	@echo "... simulator/key_test.s"
 	@echo "... simulator/visualizer_test.o"
 	@echo "... simulator/visualizer_test.i"
 	@echo "... simulator/visualizer_test.s"

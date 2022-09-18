@@ -6,11 +6,25 @@
 
 #IncludeRegexTransform: 
 
+/home/thomas/SLAM2/simulator/car.h
+lidar.h
+/home/thomas/SLAM2/simulator/lidar.h
+opencv2/opencv.hpp
+-
+../utils/vectors.h
+/home/thomas/SLAM2/utils/vectors.h
+utils.h
+/home/thomas/SLAM2/simulator/utils.h
+visualizer.h
+/home/thomas/SLAM2/simulator/visualizer.h
+
 /home/thomas/SLAM2/simulator/collision_test.cc
 ../utils/vectors.h
 /home/thomas/SLAM2/utils/vectors.h
 utils.h
 /home/thomas/SLAM2/simulator/utils.h
+car.h
+/home/thomas/SLAM2/simulator/car.h
 visualizer.h
 /home/thomas/SLAM2/simulator/visualizer.h
 stdio.h
@@ -21,6 +35,12 @@ math.h
 -
 opencv2/opencv.hpp
 -
+
+/home/thomas/SLAM2/simulator/lidar.h
+visualizer.h
+/home/thomas/SLAM2/simulator/visualizer.h
+../utils/vectors.h
+/home/thomas/SLAM2/utils/vectors.h
 
 /home/thomas/SLAM2/simulator/utils.h
 stdio.h
@@ -40,6 +60,8 @@ math.h
 iostream
 -
 ostream
+-
+opencv2/opencv.hpp
 -
 
 /usr/include/opencv4/opencv2/calib3d.hpp

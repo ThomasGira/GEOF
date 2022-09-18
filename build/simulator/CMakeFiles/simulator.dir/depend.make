@@ -4,6 +4,7 @@
 simulator/CMakeFiles/simulator.dir/car.cc.o: ../simulator/car.cc
 simulator/CMakeFiles/simulator.dir/car.cc.o: ../simulator/car.h
 simulator/CMakeFiles/simulator.dir/car.cc.o: ../simulator/lidar.h
+simulator/CMakeFiles/simulator.dir/car.cc.o: ../simulator/utils.h
 simulator/CMakeFiles/simulator.dir/car.cc.o: ../simulator/visualizer.h
 simulator/CMakeFiles/simulator.dir/car.cc.o: ../utils/vectors.h
 simulator/CMakeFiles/simulator.dir/car.cc.o: /usr/include/opencv4/opencv2/calib3d.hpp
@@ -272,6 +273,7 @@ simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/car.h
 simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/lidar.h
 simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/sim.cc
 simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/sim.h
+simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/utils.h
 simulator/CMakeFiles/simulator.dir/sim.cc.o: ../simulator/visualizer.h
 simulator/CMakeFiles/simulator.dir/sim.cc.o: ../utils/vectors.h
 simulator/CMakeFiles/simulator.dir/sim.cc.o: /usr/include/opencv4/opencv2/calib3d.hpp

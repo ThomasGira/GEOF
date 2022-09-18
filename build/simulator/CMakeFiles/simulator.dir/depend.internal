@@ -5,6 +5,7 @@ simulator/CMakeFiles/simulator.dir/car.cc.o
  /home/thomas/SLAM2/simulator/car.cc
  /home/thomas/SLAM2/simulator/car.h
  /home/thomas/SLAM2/simulator/lidar.h
+ /home/thomas/SLAM2/simulator/utils.h
  /home/thomas/SLAM2/simulator/visualizer.h
  /home/thomas/SLAM2/utils/vectors.h
  /usr/include/opencv4/opencv2/calib3d.hpp
@@ -273,6 +274,7 @@ simulator/CMakeFiles/simulator.dir/sim.cc.o
  /home/thomas/SLAM2/simulator/lidar.h
  /home/thomas/SLAM2/simulator/sim.cc
  /home/thomas/SLAM2/simulator/sim.h
+ /home/thomas/SLAM2/simulator/utils.h
  /home/thomas/SLAM2/simulator/visualizer.h
  /home/thomas/SLAM2/utils/vectors.h
  /usr/include/opencv4/opencv2/calib3d.hpp

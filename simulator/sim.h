@@ -17,8 +17,5 @@ class Sim{
         geoff::sim::Car car;
 };
 
-
-bool check_collision(cv::Mat img, cv::Point pts[4]);
-
 }
 }

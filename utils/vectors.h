@@ -2,6 +2,7 @@
 #include <math.h>
 #include<iostream>
 #include<ostream>
+#include <opencv2/opencv.hpp>
 #define PI 3.14159265
 
 namespace geoff {
@@ -36,16 +37,12 @@ class Vector2d {
     * @return New position vector.
     */
     Vector2d world2robot(Vector2d robot_pose);
-    
     Vector2d add(Vector2d vec);
-    
     Vector2d sub(Vector2d vec);
-    
     void add_eq(Vector2d vec);
-    
     void sub_eq(Vector2d vec);
-      
     void print();
+    cv::Point to_cv_point();
 };
 
 }  // namespace common

@@ -44,7 +44,9 @@ namespace viz{
 
     cv::Mat PlaceObject(cv::Mat map, cv::Mat obj, int x, int y, float angle){
         cv::Mat rot_obj = RotateImage(obj,angle);
-        rot_obj.copyTo(map(cv::Rect(x,y,rot_obj.cols, rot_obj.rows)));
+        int left_shift = (int) rot_obj.rows / 2.0;
+        int down_shift = (int) rot_obj.cols / 2.0;
+        rot_obj.copyTo(map(cv::Rect(x - left_shift,y - down_shift,rot_obj.cols, rot_obj.rows)));
 
         return map;
     }

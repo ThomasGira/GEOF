@@ -1,5 +1,7 @@
 /home/thomas/SLAM2/build/CMakeFiles/rebuild_cache.dir
 /home/thomas/SLAM2/build/CMakeFiles/edit_cache.dir
+/home/thomas/SLAM2/build/CMakeFiles/KeyTest.dir
+/home/thomas/SLAM2/build/CMakeFiles/CarTest.dir
 /home/thomas/SLAM2/build/CMakeFiles/CollisionTest.dir
 /home/thomas/SLAM2/build/CMakeFiles/VecTest.dir
 /home/thomas/SLAM2/build/CMakeFiles/VizTest.dir
@@ -10,3 +12,6 @@
 /home/thomas/SLAM2/build/utils/CMakeFiles/rebuild_cache.dir
 /home/thomas/SLAM2/build/utils/CMakeFiles/edit_cache.dir
 /home/thomas/SLAM2/build/utils/CMakeFiles/vectors.dir
+/home/thomas/SLAM2/build/navigation/CMakeFiles/rebuild_cache.dir
+/home/thomas/SLAM2/build/navigation/CMakeFiles/edit_cache.dir
+/home/thomas/SLAM2/build/navigation/CMakeFiles/keyboard.dir

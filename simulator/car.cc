@@ -1,17 +1,23 @@
 #include"car.h"
 
-#include <stdio.h>
-#include <opencv2/opencv.hpp>
-#include <chrono>
-
 namespace geoff{
 namespace sim{
+Car::Car(){
+    this -> pose = geoff::common::Vector2d(0,0,0);
+    cv::Mat asset = geoff::viz::LoadImage("../assets/car.jpg");
+    cv::resize(asset, asset, cv::Size(30, 30), cv::INTER_LINEAR);
+    this -> asset = asset;
 
-Car::Car(geoff::common::Vector2d pose){
+}
+Car::Car(geoff::common::Vector2d pose, cv::Mat map){
     this -> prev_time = get_time();
     this -> pose = pose;
     this -> vel_x = 0;
     this -> vel_theta = 0;
+    this -> map = map;
+    cv::Mat asset = geoff::viz::LoadImage("../assets/car.jpg");
+    cv::resize(asset, asset, cv::Size(30, 30), cv::INTER_LINEAR);
+    this -> asset = asset;
 };
 
 geoff::common::Vector2d Car::get_pose(float ax, float at){
@@ -49,6 +55,72 @@ void Car::update_pose(float dt){
 
     this -> pose.add_eq(world_delta);
 };
+
+bool Car::check_collision(){
+    float w = this -> width/2;
+    float l = this -> length/2;
+    geoff::common::Vector2d fl = geoff::common::Vector2d(l,-w,0).robot2world(this -> pose);
+    geoff::common::Vector2d fr = geoff::common::Vector2d(l,w,0).robot2world(this -> pose);
+    geoff::common::Vector2d rl = geoff::common::Vector2d(-l,-w,0).robot2world(this -> pose);
+    geoff::common::Vector2d rr = geoff::common::Vector2d(-l,w,0).robot2world(this -> pose);
+
+    // std::cout << "w: " << w << "l: " << l << std::endl;
+    std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
+    // std::cout << "X: " << fl.x << "Y: " << fl.y << std::endl;
+    // std::cout << "X: " << fr.x << "Y: " << fr.y << std::endl;
+    // std::cout << "X: " << rl.x << "Y: " << rl.y << std::endl;
+    // std::cout << "X: " << rr.x << "Y: " << rr.y << std::endl;
+    cv::Point pts[4] = {
+        fl.to_cv_point(),
+        fr.to_cv_point(),
+        rl.to_cv_point(),
+        rr.to_cv_point()
+    };
+    return geoff::sim::check_collision(this -> map,pts);
+}
+
+bool Car::check_collision(cv::Mat map){
+    float w = this -> width/2;
+    float l = this -> length/2;
+    geoff::common::Vector2d fl = geoff::common::Vector2d(l,-w,0).robot2world(this -> pose);
+    geoff::common::Vector2d fr = geoff::common::Vector2d(l,w,0).robot2world(this -> pose);
+    geoff::common::Vector2d rl = geoff::common::Vector2d(-l,-w,0).robot2world(this -> pose);
+    geoff::common::Vector2d rr = geoff::common::Vector2d(-l,w,0).robot2world(this -> pose);
+
+    // std::cout << "w: " << w << "l: " << l << std::endl;
+    std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
+    // std::cout << "X: " << fl.x << "Y: " << fl.y << std::endl;
+    // std::cout << "X: " << fr.x << "Y: " << fr.y << std::endl;
+    // std::cout << "X: " << rl.x << "Y: " << rl.y << std::endl;
+    // std::cout << "X: " << rr.x << "Y: " << rr.y << std::endl;
+    cv::Point pts[4] = {
+        fl.to_cv_point(),
+        rl.to_cv_point(),
+        rr.to_cv_point(),
+        fr.to_cv_point()
+    };
+    return geoff::sim::check_collision(map,pts);
+}
+cv::Mat Car::draw(cv::Mat frame){
+    int x = (int) this -> pose.x;
+    int y = (int) this -> pose.y;
+    float angle = this -> pose.rho * 180 / 3.14159;
+
+    return geoff::viz::PlaceObject(frame,this -> asset, x,y,angle);
+}
+
+void Car::set_pose(geoff::common::Vector2d pose){
+    this -> pose = pose;
+}
+
+void Car::add_pose(geoff::common::Vector2d pose){
+    geoff::common::Vector2d temp_pose = this -> pose;
+    this -> pose = this -> pose.add(pose);
+    if ((this -> check_collision())){
+        std::cout << "Error: Collision. Stopping movement" << std::endl;
+        this -> pose = temp_pose;
+    }
+}
 
 }
 }
