@@ -1,6 +1,20 @@
 # GEOF: Good Enough Odometry Frame
+## Usage
+I'm probablky gonna forget how to run stuff or use stuf so heres a nice reminder  to myself on what to do in the future.
+### CMMake
+First off, this shit kinda wack. But I think its a good way to do stuff and I'm not going to switch to bzael.
+* **Building**: This is quite easy.
+```
+cd build
+cmake --configure ..
+cmake --build .
+```
+* **Running**: Thinking about it I probably wont forget this one.
+```
+./<Name of module you want to run>
+```
 
-## Description
+
 I'm trying to be better so this is my attempt at writing 2d slam. I'm actually not going to start off by doing this and instead am trying to write a neural net that can drive a car around a track. I think a lot of the tool that I will develop while doing this will lend well to creating an infrastructure to develop slam on. The key components for this project will be a visualizer, a simulator and the neural net.
 
 ## Visualizer
