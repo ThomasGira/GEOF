@@ -61,3 +61,13 @@ target_include_directories(CarTest
                         PUBLIC "${PROJECT_SOURCE_DIR}/utils"
                         PUBLIC "${PROJECT_SOURCE_DIR}/navigation"
                            )
+
+add_executable( LidarTest ${PROJECT_SOURCE_DIR}/simulator/lidar_test.cc)
+target_link_libraries( LidarTest 
+                        PUBLIC vectors 
+                        PUBLIC visualizer 
+                        PUBLIC simulator
+                        PUBLIC keyboard
+                        ${CURSES_LIBRARIES}
+                        ${OpenCV_LIBS}
+                           )
