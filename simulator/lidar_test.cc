@@ -14,7 +14,8 @@ int main(int argc, char** argv )
     geoff::common::Vector2d pose = geoff::common::Vector2d(100,100,0);
     geoff::sim::Lidar lidar = geoff::sim::Lidar(pose,raw_map, 30, 6.28, 100);
     while (true){
-        std::vector<geoff::common::Vector2d> beams = lidar.check_lidar();
+        lidar.check_lidar();
+        lidar.draw_lidar();
     }
     return 0;
 }

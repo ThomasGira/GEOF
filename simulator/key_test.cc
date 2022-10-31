@@ -15,7 +15,6 @@ int main(int argc, char** argv )
     geoff::common::Vector2d pose = geoff::common::Vector2d(120,130,1);
     geoff::viz::CreateWindow("test");
     geoff::sim::Car car = geoff::sim::Car(pose,raw_map);
-    geoff::viz::CreateWindow("test");
     float rho = 0;
     geoff::key::init_key();
     while (true){
@@ -42,12 +41,10 @@ int main(int argc, char** argv )
                 add_pose = geoff::common::Vector2d(0,0,car.pose.rho).world2robot(rel_pose);
                 break;
         }
-        std::cout << "Angle: " << car.pose.rho << std::endl;
         car.add_pose(add_pose);
         cv::Mat map = raw_map.clone();
         bool collision = car.check_collision(raw_map);
-        if (collision){std::cout << "Colision  " << key<< std::endl;}
-        else {std::cout << "We good chief" << std::endl;}
+        // car.check_lidar();
         cv::Mat frame = car.draw(map);
         geoff::viz::DisplayImage(frame,"test");
     }

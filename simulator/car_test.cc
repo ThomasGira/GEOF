@@ -11,10 +11,9 @@ int main(int argc, char** argv )
 {
     cv::Mat raw_map = geoff::viz::LoadImage("../assets/map_1.jpg");
     cv::resize(raw_map, raw_map, cv::Size(1000, 1000), cv::INTER_LINEAR);
-    geoff::common::Vector2d pose = geoff::common::Vector2d(100,100,0);
+    geoff::common::Vector2d pose = geoff::common::Vector2d(120,130,0);
     geoff::viz::CreateWindow("test");
     geoff::sim::Car car = geoff::sim::Car(pose,raw_map);
-    geoff::viz::CreateWindow("test");
     float rho = 0;
     while (true){
         float scale = sin(rho/100);
@@ -27,6 +26,7 @@ int main(int argc, char** argv )
         bool collision = car.check_collision(raw_map);
         if (collision){std::cout << "Colision" << std::endl;}
         else {std::cout << "We good chief" << std::endl;}
+        car.check_lidar();
         cv::Mat frame = car.draw(map);
         geoff::viz::DisplayImage(frame,"test");
     }

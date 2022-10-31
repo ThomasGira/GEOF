@@ -46,7 +46,16 @@ namespace viz{
         cv::Mat rot_obj = RotateImage(obj,angle);
         int left_shift = (int) rot_obj.rows / 2.0;
         int down_shift = (int) rot_obj.cols / 2.0;
+        cv::Mat raw_map = map.clone();
+
         rot_obj.copyTo(map(cv::Rect(x - left_shift,y - down_shift,rot_obj.cols, rot_obj.rows)));
+        cv::bitwise_not(raw_map,raw_map);
+        cv::bitwise_not(map,map);
+        // cv::imshow("raw", raw_map);
+        // cv::imshow("map",map);
+        // cv::waitKey(0);
+        cv::bitwise_or(map,raw_map,map);
+        cv::bitwise_not(map,map);
 
         return map;
     }

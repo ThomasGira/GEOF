@@ -37,6 +37,22 @@ void draw_on(cv::Mat img_in, cv::Point pts[4]){
     cv::waitKey(1);
 };
 
+void draw_on(cv::Mat img_in, std::vector<std::vector<cv::Point>> point_list){
+    cv::Mat img = img_in.clone();
+    for ( int i =0; i < point_list.size(); i++){
+        std::vector<cv::Point> point_vector = {point_list[i]};
+        cv::Point pts[4] = {
+            point_vector[0],
+            point_vector[1],
+            point_vector[2],
+            point_vector[3],
+        };
+        cv::fillConvexPoly( img, pts, 4, cv::Scalar(0) );
+    }
+    cv::imshow("img", img);
+    cv::waitKey(1);
+};
+
 
 }
 }

@@ -9,17 +9,28 @@ Car::Car(){
     this -> asset = asset;
 
 }
-Car::Car(geoff::common::Vector2d pose, cv::Mat map){
+Car::Car(geoff::common::Vector2d initial_pose, cv::Mat base_map){
     this -> prev_time = get_time();
-    this -> pose = pose;
+    this -> pose = initial_pose;
     this -> vel_x = 0;
     this -> vel_theta = 0;
-    this -> map = map;
+    this -> map = base_map;
     cv::Mat asset = geoff::viz::LoadImage("../assets/car.jpg");
     cv::resize(asset, asset, cv::Size(30, 30), cv::INTER_LINEAR);
     this -> asset = asset;
+
+
+    // Add lidar
+    lidar = geoff::sim::Lidar();
+};
+void Car::check_lidar() {
+    lidar.update_pose(this->pose);
+    lidar.check_lidar();
 };
 
+void Car::draw_lidar() {
+    lidar.draw_lidar();
+};
 geoff::common::Vector2d Car::get_pose(float ax, float at){
     float dt = this -> get_dt();
     update_velocity(ax,at,dt);
@@ -65,7 +76,7 @@ bool Car::check_collision(){
     geoff::common::Vector2d rr = geoff::common::Vector2d(-l,w,0).robot2world(this -> pose);
 
     // std::cout << "w: " << w << "l: " << l << std::endl;
-    std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
+    // std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
     // std::cout << "X: " << fl.x << "Y: " << fl.y << std::endl;
     // std::cout << "X: " << fr.x << "Y: " << fr.y << std::endl;
     // std::cout << "X: " << rl.x << "Y: " << rl.y << std::endl;
@@ -88,7 +99,7 @@ bool Car::check_collision(cv::Mat map){
     geoff::common::Vector2d rr = geoff::common::Vector2d(-l,w,0).robot2world(this -> pose);
 
     // std::cout << "w: " << w << "l: " << l << std::endl;
-    std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
+    // std::cout << "X: " << this->pose.x << "Y: " << this->pose.y << std::endl;
     // std::cout << "X: " << fl.x << "Y: " << fl.y << std::endl;
     // std::cout << "X: " << fr.x << "Y: " << fr.y << std::endl;
     // std::cout << "X: " << rl.x << "Y: " << rl.y << std::endl;
@@ -102,11 +113,21 @@ bool Car::check_collision(cv::Mat map){
     return geoff::sim::check_collision(map,pts);
 }
 cv::Mat Car::draw(cv::Mat frame){
+    // Get position nad orientation.
     int x = (int) this -> pose.x;
     int y = (int) this -> pose.y;
     float angle = this -> pose.rho * 180 / 3.14159;
 
-    return geoff::viz::PlaceObject(frame,this -> asset, x,y,angle);
+    //Place the car object.
+    frame  = geoff::viz::PlaceObject(frame,this -> asset, x,y,angle);
+    // Draw each lidar beam.
+    // Get list of beam Mats. Each beam is in the robot frame.
+    cv::Mat beams = lidar.get_beam_objs();
+
+    // Place beams in frame. Subtract angle of robot to get in world frame.
+    frame = geoff::viz::PlaceObject(frame,beams,x,y,-angle);
+
+    return frame;
 }
 
 void Car::set_pose(geoff::common::Vector2d pose){
