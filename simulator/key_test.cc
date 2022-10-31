@@ -4,7 +4,6 @@
 #include"car.h"
 #include"visualizer.h"
 #include<stdio.h>
-#include<iostream>
 #include<math.h>
 
 int main(int argc, char** argv )
@@ -40,10 +39,9 @@ int main(int argc, char** argv )
                 break;
         }
         car.add_pose(add_pose);
-        cv::Mat map = raw_map.clone();
         bool collision = car.check_collision(raw_map);
         car.check_lidar();
-        cv::Mat frame = car.draw(map);
+        cv::Mat frame = car.draw();
         geoff::viz::DisplayImage(frame,"test");
     }
     return 0;

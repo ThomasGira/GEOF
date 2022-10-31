@@ -17,6 +17,7 @@ class Lidar{
         void check_lidar();
         std::vector<std::pair<int,int>> get_beam_points();
         cv::Mat get_beam_objs();
+        std::vector<float> get_lidar_hits();
     private:
         int num_beams;
         float fov;

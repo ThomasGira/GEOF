@@ -24,9 +24,13 @@ class Car{
         bool check_collision(cv::Mat map);
         bool check_collision();
         cv::Mat draw(cv::Mat frame);
+        cv::Mat draw();
         geoff::common::Vector2d pose;
         void check_lidar();
         void draw_lidar();
+        std::vector<float> get_lidar_hits();
+        cv::Mat get_traversed_area();
+        int get_score();
 
     private:
         float vel_x;
@@ -36,6 +40,7 @@ class Car{
         geoff::sim::Lidar lidar;
         cv::Mat map;
         cv::Mat asset;
+        cv::Mat traversed_area;
         std::chrono::steady_clock::time_point prev_time;
         std::chrono::steady_clock::time_point get_time();
         float get_dt();

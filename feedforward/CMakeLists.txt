@@ -1,0 +1,1 @@
+add_library(feedforward network.cc layer.cc node.cc)

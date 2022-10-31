@@ -19,6 +19,8 @@ Car::Car(geoff::common::Vector2d initial_pose, cv::Mat base_map){
     cv::resize(asset, asset, cv::Size(30, 30), cv::INTER_LINEAR);
     this -> asset = asset;
 
+    this -> traversed_area = cv::Mat::zeros(map.rows, map.cols, CV_8U);
+
 
     // Add lidar
     lidar = geoff::sim::Lidar();
@@ -112,6 +114,10 @@ bool Car::check_collision(cv::Mat map){
     };
     return geoff::sim::check_collision(map,pts);
 }
+cv::Mat Car::draw(){
+    cv::Mat new_map = map.clone();
+    return draw(new_map);
+}
 cv::Mat Car::draw(cv::Mat frame){
     // Get position nad orientation.
     int x = (int) this -> pose.x;
@@ -140,10 +146,29 @@ void Car::add_pose(geoff::common::Vector2d pose){
     geoff::common::Vector2d temp_pose = this -> pose;
     this -> pose = this -> pose.add(add_pose);
     if ((this -> check_collision())){
-        std::cout << "Error: Collision. Stopping movement" << std::endl;
-        this -> pose = temp_pose;
+        std::cout << "Error: Collision." << std::endl;
+        // this -> pose = temp_pose;
+    } else {
+        int x = (int) this -> pose.x;
+        int y = (int) this -> pose.y;
+        traversed_area = geoff::viz::draw_circle(traversed_area,x,y,5,cv::Scalar(255));
     }
 }
+
+
+std::vector<float> Car::get_lidar_hits(){
+    return lidar.get_lidar_hits();
+}
+
+
+cv::Mat Car::get_traversed_area(){
+    return traversed_area;
+}
+
+int Car::get_score(){
+    return cv::sum(traversed_area)[0]/255;
+}
+
 
 }
 }

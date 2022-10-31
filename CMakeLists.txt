@@ -8,6 +8,7 @@ include_directories(${CURSES_INCLUDE_DIR})
 add_subdirectory(simulator)
 add_subdirectory(utils)
 add_subdirectory(navigation)
+add_subdirectory(feedforward)
 
 add_executable( VizTest ${PROJECT_SOURCE_DIR}/simulator/visualizer_test.cc)
 target_link_libraries( VizTest 
@@ -68,6 +69,16 @@ target_link_libraries( LidarTest
                         PUBLIC visualizer 
                         PUBLIC simulator
                         PUBLIC keyboard
+                        ${CURSES_LIBRARIES}
+                        ${OpenCV_LIBS}
+                           )
+
+add_executable( FFTest ${PROJECT_SOURCE_DIR}/simulator/ff_test.cc)
+target_link_libraries( FFTest 
+                        PUBLIC vectors 
+                        PUBLIC visualizer 
+                        PUBLIC simulator
+                        PUBLIC feedforward
                         ${CURSES_LIBRARIES}
                         ${OpenCV_LIBS}
                            )
