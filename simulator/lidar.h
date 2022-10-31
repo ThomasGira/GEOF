@@ -15,12 +15,14 @@ class Lidar{
 
         void draw_lidar();
         void check_lidar();
+        std::vector<std::pair<int,int>> get_beam_points();
         cv::Mat get_beam_objs();
     private:
         int num_beams;
         float fov;
         int range;
         cv::Mat map;
+        int accuracy;
 
         geoff::common::Vector2d pose;
         std::vector<std::pair<float,float>> beams;

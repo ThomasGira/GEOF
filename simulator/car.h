@@ -17,6 +17,9 @@ class Car{
 
         geoff::common::Vector2d get_pose(float ax, float at);
         void set_pose(geoff::common::Vector2d pose);
+        /** 
+         * Adds a pose in robot coordinates
+        */
         void add_pose(geoff::common::Vector2d pose);
         bool check_collision(cv::Mat map);
         bool check_collision();

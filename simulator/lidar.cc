@@ -23,6 +23,7 @@ Lidar::Lidar(){
     this -> num_beams = 15;
     this -> fov = 6.28;
     this -> range = 100;
+    this -> accuracy = 5;
 };
 
 void Lidar::update_pose(geoff::common::Vector2d pose){
@@ -49,6 +50,19 @@ cv::Mat Lidar::get_beam_objs(){
     return img;
 
 }
+std::vector<std::pair<int,int>> Lidar::get_beam_points(){
+    int x = (int) this->pose.x;
+    int y = (int) this->pose.y;
+    std::vector<std::pair<int,int>> points;
+    for (std::pair<float, float> beam : this -> beams) { 
+        int dx = (int) (cos(beam.first) * beam.second);
+        int dy = (int) (sin(beam.first) * beam.second);
+        std::pair<int,int> point(dx, dy);
+        points.push_back(pose.point2world(point));
+    }
+    return points;
+
+}
 
 void Lidar::check_lidar(){
     std::vector<std::pair<float,float>> hits;
@@ -64,14 +78,19 @@ void Lidar::check_lidar(){
 
 std::pair<float,float> Lidar::calc_beam(float angle){
     float length = this -> range;
-    while ( check_hit(angle,length) ){
-        
-        length -= 1;
-        if (length < 0 ){
-            break;
+    int iterations = 0;
+    float max = length;
+    float min = 0;
+    while ( iterations < accuracy ){
+        if (check_hit(angle,length)){
+            max = length;
+            length = (min + length) /2.0;
+        } else {
+            min = length;
+            length = (max + length) /2.0;
         }
+        iterations++;
     }
-    if (length < 0) {length = 0; };
     return std::pair<float,float> {angle,length};
 }
 void Lidar::draw_lidar() {

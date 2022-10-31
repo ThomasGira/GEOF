@@ -43,6 +43,18 @@ Vector2d Vector2d::robot2world(Vector2d robot_pose) {
 
     return Vector2d(new_x,new_y,new_angle);
 };
+
+std::pair<int,int> Vector2d::point2world(std::pair<int,int> point) {
+    // Calcuate the sin and cosine of the angle relative to the world
+    float sin_angle = sin(rho);
+    float cos_angle = cos(rho);
+
+    // calculate resultant pose
+    int point_x = (int) (x + cos_angle *  point.first - sin_angle *  point.second);
+    int point_y = (int) (y + sin_angle *  point.first + cos_angle *  point.second);
+
+    return std::pair<int,int>{point_x,point_y};
+};
     
 Vector2d Vector2d::world2robot(Vector2d robot_pose) {
     // Extract elements

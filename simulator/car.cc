@@ -122,10 +122,10 @@ cv::Mat Car::draw(cv::Mat frame){
     frame  = geoff::viz::PlaceObject(frame,this -> asset, x,y,angle);
     // Draw each lidar beam.
     // Get list of beam Mats. Each beam is in the robot frame.
-    cv::Mat beams = lidar.get_beam_objs();
+    std::vector<std::pair<int,int>> points = lidar.get_beam_points();
 
     // Place beams in frame. Subtract angle of robot to get in world frame.
-    frame = geoff::viz::PlaceObject(frame,beams,x,y,-angle);
+    frame = geoff::viz::draw_circle(frame,points,3,cv::Scalar(0,0,0));
 
     return frame;
 }
@@ -135,8 +135,10 @@ void Car::set_pose(geoff::common::Vector2d pose){
 }
 
 void Car::add_pose(geoff::common::Vector2d pose){
+    geoff::common::Vector2d rel_pose = geoff::common::Vector2d(0,0,this->pose.rho);
+    geoff::common::Vector2d add_pose = geoff::common::Vector2d(pose.x,pose.y,this->pose.rho+pose.rho).world2robot(rel_pose);
     geoff::common::Vector2d temp_pose = this -> pose;
-    this -> pose = this -> pose.add(pose);
+    this -> pose = this -> pose.add(add_pose);
     if ((this -> check_collision())){
         std::cout << "Error: Collision. Stopping movement" << std::endl;
         this -> pose = temp_pose;

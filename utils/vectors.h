@@ -29,6 +29,13 @@ class Vector2d {
     * @return New position vector.
     */
     Vector2d robot2world(Vector2d robot_pose);
+
+    /**
+    * @brief Conver a provided coordinate in robot frame into world frame.
+    * @param point The pair of ints representing the robot frame coordinates.
+    * @return The points in world frame.
+    */
+    std::pair<int,int> point2world(std::pair<int,int> point);
     
 
     /**

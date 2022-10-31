@@ -6,7 +6,6 @@
 #include<stdio.h>
 #include<iostream>
 #include<math.h>
-#include <opencv2/opencv.hpp>
 
 int main(int argc, char** argv )
 {
@@ -20,31 +19,30 @@ int main(int argc, char** argv )
     while (true){
         int key = geoff::key::get_key();
         geoff::common::Vector2d add_pose;
-        geoff::common::Vector2d rel_pose = geoff::common::Vector2d(0,0,car.pose.rho);
         switch (key){
             case 0:
-                add_pose = geoff::common::Vector2d(1,0,car.pose.rho).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(1,0,0);
                 break;
             case 1:
-                add_pose = geoff::common::Vector2d(0,0,car.pose.rho-.1).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(0,0,-.1);
                 break;
             case 2:
-                add_pose = geoff::common::Vector2d(-1,0,car.pose.rho).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(-1,0,0);
                 break;
             case 3:
-                add_pose = geoff::common::Vector2d(0,0,car.pose.rho+.1).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(0,0,.1);
                 break;
             case 4:
-                add_pose = geoff::common::Vector2d(0,0,car.pose.rho).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(0,0,0);
                 break;
             default:
-                add_pose = geoff::common::Vector2d(0,0,car.pose.rho).world2robot(rel_pose);
+                add_pose = geoff::common::Vector2d(0,0,0);
                 break;
         }
         car.add_pose(add_pose);
         cv::Mat map = raw_map.clone();
         bool collision = car.check_collision(raw_map);
-        // car.check_lidar();
+        car.check_lidar();
         cv::Mat frame = car.draw(map);
         geoff::viz::DisplayImage(frame,"test");
     }
