@@ -10,11 +10,13 @@ namespace geoff{
 namespace ff{
 
 Network::Network(){
-    srand(time(0));
+    int curr_time = time(0);
+    srand(curr_time);
     std::ifstream f("../feedforward/network.json");
     json data = json::parse(f);
     json layers = data["layers"];
     float random = data["random"];
+    this -> random = random;
     this -> num_layers = 0;
     for (json layer_config : layers){
         num_layers++;
@@ -34,6 +36,17 @@ void Network::determine_outputs(std::vector<float> inputs){
 
 std::vector<float> Network::get_output(){
     return layers.back().get_outputs();
+}
+
+json Network::get_json(){
+    json data;
+    data["random"] = random;
+    std::vector<json> layers_json;
+    for (Layer layer: layers){
+        layers_json.push_back(layer.get_json());
+    }
+    data["layers"] = layers_json;
+    return data;
 }
 
 }}

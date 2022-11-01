@@ -40,4 +40,13 @@ std::vector<float> Layer::get_outputs(){
     }
     return outputs;
 }
+
+json Layer::get_json(){
+    std::vector<json> nodes_json;
+    for (Node node : nodes){
+        nodes_json.push_back(node.get_json());
+    }
+    json data = nodes_json;
+    return data;
+}
 }}

@@ -34,6 +34,11 @@ class Layer{
          * @brief A vector of nodes.
         */
         std::vector<Node> nodes;
+
+        /** @brief Calculates the current weights and biases that the neural net is using.
+         * @return The json object
+        */
+        json get_json();
     private:
         /**
          * @brief The number of nodes in the layer.

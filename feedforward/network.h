@@ -26,10 +26,20 @@ class Network{
          * @brief A list of layers in the network.
         */
         std::vector<Layer> layers;
+
+        /** @brief Calculates the current weights and biases that the neural net is using.
+         * @return The json object
+        */
+        json get_json();
     private:
         /** 
          * @brief The number of layers in the network.
         */
         int num_layers;
+
+        /**
+         * @brief The range of randomness to apply to the input net schema.
+        */ 
+       float random;   
 };
 }}

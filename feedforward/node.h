@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include "../utils/json.hpp"
+using json = nlohmann::json;
 
 namespace geoff{
 namespace ff{
@@ -26,6 +28,11 @@ class Node{
          * @brief The resultant output from inputs.
         */
         float output;
+
+        /** @brief Calculates the current weights and biases that the neural net is using.
+         * @return The json object
+        */
+        json get_json();
     private:
         /**
          * @brief A vector of weights to apply to an input number.

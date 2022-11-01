@@ -67,4 +67,12 @@ void Node::determine_output(std::vector<Node> input){
 float Node::sigmoid(float input){
     return 1.0 / ( 1 + exp(-1.0*input) );
 };
+
+json Node::get_json(){
+    json data = json{
+        {"bias",bias},
+        {"weights", weights}
+    };
+    return data;
+}
 }}
