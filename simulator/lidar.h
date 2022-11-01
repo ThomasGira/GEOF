@@ -11,6 +11,7 @@ class Lidar{
     public:
         Lidar(geoff::common::Vector2d pose, cv::Mat map,  int num_beams, float fov, int range);
         Lidar();
+        Lidar(cv::Mat map);
         void update_pose(geoff::common::Vector2d pose);
 
         void draw_lidar();

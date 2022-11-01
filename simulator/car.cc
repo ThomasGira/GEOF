@@ -23,7 +23,7 @@ Car::Car(geoff::common::Vector2d initial_pose, cv::Mat base_map){
 
 
     // Add lidar
-    lidar = geoff::sim::Lidar();
+    lidar = geoff::sim::Lidar(map);
 };
 void Car::check_lidar() {
     lidar.update_pose(this->pose);

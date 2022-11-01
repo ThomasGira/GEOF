@@ -26,6 +26,16 @@ Lidar::Lidar(){
     this -> accuracy = 5;
 };
 
+Lidar::Lidar(cv::Mat map){
+    this -> map = map;
+    cv::resize(map, map, cv::Size(1000, 1000), cv::INTER_LINEAR);
+    pose = geoff::common::Vector2d(100,100,0);
+    this -> num_beams = 6;
+    this -> fov = 6.28;
+    this -> range = 100;
+    this -> accuracy = 5;
+};
+
 void Lidar::update_pose(geoff::common::Vector2d pose){
     this -> pose = pose;
 };

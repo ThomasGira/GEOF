@@ -73,8 +73,18 @@ target_link_libraries( LidarTest
                         ${OpenCV_LIBS}
                            )
 
-add_executable( FFTest ${PROJECT_SOURCE_DIR}/simulator/ff_test.cc)
-target_link_libraries( FFTest 
+add_executable( FFTrainer ${PROJECT_SOURCE_DIR}/simulator/ff_trainer.cc)
+target_link_libraries( FFTrainer 
+                        PUBLIC vectors 
+                        PUBLIC visualizer 
+                        PUBLIC simulator
+                        PUBLIC feedforward
+                        ${CURSES_LIBRARIES}
+                        ${OpenCV_LIBS}
+                           )
+
+add_executable( Demo ${PROJECT_SOURCE_DIR}/simulator/demo.cc)
+target_link_libraries( Demo 
                         PUBLIC vectors 
                         PUBLIC visualizer 
                         PUBLIC simulator

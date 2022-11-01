@@ -8,9 +8,9 @@
 
 int main(int argc, char** argv )
 {
-    cv::Mat raw_map = geoff::viz::LoadImage("../assets/map_1.jpg");
+    cv::Mat raw_map = geoff::viz::LoadImage("../assets/track.jpg");
     cv::resize(raw_map, raw_map, cv::Size(1000, 1000), cv::INTER_LINEAR);
-    geoff::common::Vector2d pose = geoff::common::Vector2d(120,130,1);
+    geoff::common::Vector2d pose = geoff::common::Vector2d(150,300,-1);
     geoff::viz::CreateWindow("test");
     geoff::sim::Car car = geoff::sim::Car(pose,raw_map);
     float rho = 0;
