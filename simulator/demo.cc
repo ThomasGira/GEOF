@@ -25,13 +25,13 @@ int main(int argc, char** argv )
         int index = 0;
 
         // Loop through untill maximum iterations or collision.
-        while (!(car.check_collision(raw_map))&( index < 100)){
+        while (!(car.check_collision(raw_map))){
             index++;
             car.check_lidar();
             std::vector<float> lidar_hits= car.get_lidar_hits();
             network.determine_outputs(lidar_hits);
             std::vector<float> outputs = network.get_output();
-            geoff::common::Vector2d add_pose = geoff::common::Vector2d(outputs[0],0,(outputs[1]-0.5)/10);
+            geoff::common::Vector2d add_pose = geoff::common::Vector2d(outputs[0],0,(outputs[1]-0.5)/3);
             car.add_pose(add_pose);
             cv::Mat frame = car.draw();
             geoff::viz::DisplayImage(frame,"test");

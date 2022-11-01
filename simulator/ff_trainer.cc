@@ -25,7 +25,7 @@ int main(int argc, char** argv )
         std::pair<int,json> best (0,j);
         
         // Loop throug multiple generations.
-        for (int i =0; i< 10; i++) {
+        for (int i =0; i< 50; i++) {
             // Create a new map
             cv::Mat raw_map = geoff::viz::LoadImage("../assets/map_1.jpg");
             cv::resize(raw_map, raw_map, cv::Size(1000, 1000), cv::INTER_LINEAR);
@@ -39,13 +39,13 @@ int main(int argc, char** argv )
             int index = 0;
 
             // Loop through untill maximum iterations or collision.
-            while (!(car.check_collision(raw_map))&( index < 100)){
+            while (!(car.check_collision(raw_map))){
                 index++;
                 car.check_lidar();
                 std::vector<float> lidar_hits= car.get_lidar_hits();
                 network.determine_outputs(lidar_hits);
                 std::vector<float> outputs = network.get_output();
-                geoff::common::Vector2d add_pose = geoff::common::Vector2d(outputs[0],0,(outputs[1]-0.5)/10);
+                geoff::common::Vector2d add_pose = geoff::common::Vector2d(outputs[0],0,(outputs[1]-0.5)/3);
                 car.add_pose(add_pose);
                 // cv::Mat frame = car.draw();
                 // geoff::viz::DisplayImage(frame,"test");
@@ -54,9 +54,6 @@ int main(int argc, char** argv )
             // Calculate performance
             cv::Mat traversed_area = car.get_traversed_area();
             int score = car.get_score();
-            if (car.check_collision(raw_map)){
-                score -= 200;
-            }
             json config = network.get_json();
             if (score > best.first){
                 best.first = score;
