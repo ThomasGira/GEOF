@@ -31,7 +31,7 @@ class Car{
         std::vector<float> get_lidar_hits();
         cv::Mat get_traversed_area();
         int get_score();
-
+        float distance_from_point(float x, float y);
     private:
         float vel_x;
         float vel_theta;

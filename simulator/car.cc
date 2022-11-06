@@ -1,4 +1,5 @@
 #include"car.h"
+#include <math.h>
 
 namespace geoff{
 namespace sim{
@@ -169,6 +170,13 @@ int Car::get_score(){
     return cv::sum(traversed_area)[0]/255;
 }
 
+
+float Car::distance_from_point(float x, float y){
+    float dx = pose.x - x;
+    float dy = pose.y - y;
+
+    return sqrt(pow(dx,2)+ pow(dy,2));
+}
 
 }
 }

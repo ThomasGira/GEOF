@@ -23,7 +23,7 @@ Lidar::Lidar(){
     this -> num_beams = 6;
     this -> fov = 6.28;
     this -> range = 300;
-    this -> accuracy = 7;
+    this -> accuracy = 5;
 };
 
 Lidar::Lidar(cv::Mat map){
@@ -63,8 +63,8 @@ cv::Mat Lidar::get_beam_objs(){
 std::vector<std::pair<int,int>> Lidar::get_beam_points(){
     std::vector<std::pair<int,int>> points;
     for (std::pair<float, float> beam : this -> beams) { 
-        int dx = (int) (cos(beam.first) * beam.second);
-        int dy = (int) (sin(beam.first) * beam.second);
+        int dx = (int) (cos(-pose.rho + beam.first) * beam.second);
+        int dy = (int) (sin(-pose.rho + beam.first) * beam.second);
         std::pair<int,int> point(dx, dy);
         points.push_back(pose.point2world(point));
     }
@@ -85,10 +85,10 @@ std::vector<float> Lidar::get_lidar_hits(){
 
 void Lidar::check_lidar(){
     std::vector<std::pair<float,float>> hits;
-    float max_angle = this -> fov/2.0;
-    float delta_angle = this -> fov /(this -> num_beams-1);
+    float delta_angle = this -> fov /(this -> num_beams);
     for (int i = 0; i < this -> num_beams; i++){
-        std::pair<float,float> hit = calc_beam(delta_angle*i);
+        // std::cout << "Calculating beam " << std::to_string(i) << " with angle " << std::to_string(-pose.rho + delta_angle*i) << std::endl;
+        std::pair<float,float> hit = calc_beam(-pose.rho + delta_angle*i);
         hits.push_back(hit);
     }
 
@@ -110,18 +110,32 @@ std::pair<float,float> Lidar::calc_beam(float angle){
         }
         iterations++;
     }
+    // float dx = cos(angle) * length;
+    // float dy = sin(angle) * length;
+    // std::cout << "angle: " << std::to_string(angle) << " dx: " << dx << " dy: " << dy << std::endl;  
+    // geoff::common::Vector2d p1 = geoff::common::Vector2d(pose.x,pose.y,0);
+    // geoff::common::Vector2d p2 = geoff::common::Vector2d(pose.x + dx, pose.y + dy,0);
+    // geoff::common::Vector2d p3 = geoff::common::Vector2d(pose.x + dx + 1.0, pose.y + dy + 1.0,0);
+    // geoff::common::Vector2d p4 = geoff::common::Vector2d(pose.x + 1, pose.y + 1,0);
+    // cv::Point pts[4] = {
+    //     p1.to_cv_point(),
+    //     p2.to_cv_point(),
+    //     p3.to_cv_point(),
+    //     p4.to_cv_point()
+    // };
+    // geoff::sim::draw_on(map,pts);
     return std::pair<float,float> {angle,length};
 }
 void Lidar::draw_lidar() {
     std::vector<std::vector<cv::Point>> point_list;
     for (std::pair<float, float> beam : beams) { 
-        float dx = cos(beam.first) * beam.second;
-        float dy = sin(beam.first) * beam.second;
+        float dx = cos(-pose.rho + beam.first) * beam.second;
+        float dy = sin(-pose.rho + beam.first) * beam.second;
         
-        geoff::common::Vector2d p1 = geoff::common::Vector2d(0,0,0).robot2world(pose);
-        geoff::common::Vector2d p2 = geoff::common::Vector2d(dx,dy,0).robot2world(pose);
-        geoff::common::Vector2d p3 = geoff::common::Vector2d(dx+1.0, dy+1.0,0).robot2world(pose);
-        geoff::common::Vector2d p4 = geoff::common::Vector2d(1, 1,0).robot2world(pose);
+        geoff::common::Vector2d p1 = geoff::common::Vector2d(pose.x,pose.y,0);
+        geoff::common::Vector2d p2 = geoff::common::Vector2d(pose.x + dx,pose.y + dy,0);
+        geoff::common::Vector2d p3 = geoff::common::Vector2d(pose.x + dx + 1.0, pose.y + dy + 1.0,0);
+        geoff::common::Vector2d p4 = geoff::common::Vector2d(pose.x + 1, pose.y + 1,0);
         std::vector<cv::Point> pts;
         pts.push_back(p1.to_cv_point());
         pts.push_back(p2.to_cv_point());
@@ -133,13 +147,13 @@ void Lidar::draw_lidar() {
     geoff::sim::draw_on(map,point_list);
 }
 void Lidar::draw_beam(float angle, float length){
-    float dx = cos(angle) * length;
-    float dy = sin(angle) * length;
-    
-    geoff::common::Vector2d p1 = geoff::common::Vector2d(0,0,0).robot2world(pose);
-    geoff::common::Vector2d p2 = geoff::common::Vector2d(dx,dy,0).robot2world(pose);
-    geoff::common::Vector2d p3 = geoff::common::Vector2d(dx+1.0, dy+1.0,0).robot2world(pose);
-    geoff::common::Vector2d p4 = geoff::common::Vector2d(1, 1,0).robot2world(pose);
+    float dx = cos(-pose.rho + angle) * length;
+    float dy = sin(-pose.rho + angle) * length;
+        
+    geoff::common::Vector2d p1 = geoff::common::Vector2d(pose.x,pose.y,0);
+    geoff::common::Vector2d p2 = geoff::common::Vector2d(pose.x + dx,pose.y + dy,0);
+    geoff::common::Vector2d p3 = geoff::common::Vector2d(pose.x + dx + 1.0, pose.y + dy + 1.0,0);
+    geoff::common::Vector2d p4 = geoff::common::Vector2d(pose.x + 1, pose.y + 1,0);
     cv::Point pts[4] = {
         p1.to_cv_point(),
         p2.to_cv_point(),
@@ -153,11 +167,11 @@ void Lidar::draw_beam(float angle, float length){
 bool Lidar::check_hit(float angle, float length){
     float dx = cos(angle) * length;
     float dy = sin(angle) * length;
-    
-    geoff::common::Vector2d p1 = geoff::common::Vector2d(0,0,0).robot2world(pose);
-    geoff::common::Vector2d p2 = geoff::common::Vector2d(dx,dy,0).robot2world(pose);
-    geoff::common::Vector2d p3 = geoff::common::Vector2d(dx+1.0, dy+1.0,0).robot2world(pose);
-    geoff::common::Vector2d p4 = geoff::common::Vector2d(1, 1,0).robot2world(pose);
+        
+    geoff::common::Vector2d p1 = geoff::common::Vector2d(pose.x,pose.y,0);
+    geoff::common::Vector2d p2 = geoff::common::Vector2d(pose.x + dx,pose.y + dy,0);
+    geoff::common::Vector2d p3 = geoff::common::Vector2d(pose.x + dx + 1.0, pose.y + dy + 1.0,0);
+    geoff::common::Vector2d p4 = geoff::common::Vector2d(pose.x + 1, pose.y + 1,0);
     cv::Point pts[4] = {
         p1.to_cv_point(),
         p2.to_cv_point(),

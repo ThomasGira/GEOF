@@ -61,9 +61,15 @@ namespace viz{
     }
 
     cv::Mat draw_circle(cv::Mat image, std::vector<std::pair<int, int>> points, int r, cv::Scalar color){
+        bool first = true;
         for ( std::pair<int,int> point : points ){
             cv::Point center = cv::Point(point.first,point.second);
-            cv::circle(image,center,r,color,-1);
+            if (first){
+                cv::circle(image,center,r+5,color,-1);
+                first = false;
+            } else {
+                cv::circle(image,center,r,color,-1);
+            }
         }
         return image;
     }

@@ -9,13 +9,21 @@ using json = nlohmann::json;
 
 int main(int argc, char** argv )
 {
+    // Get scenario.
+    std::ifstream f("../simulator/setup.json");
+    json setup = json::parse(f);
+
+    std::string map_name = setup["map"];
+    std::vector<float> spawn = setup["spawn"];
+    std::cout << "Map: " << map_name << std::endl;
+    std::cout << "Spawn: " << std::to_string(spawn[0]) << ", " << std::to_string(spawn[1]) << ", " << std::to_string(spawn[2]) << std::endl;
     // Loop forever
     while (true) {
         // Create a new map
-        cv::Mat raw_map = geoff::viz::LoadImage("../assets/track.jpg");
+        cv::Mat raw_map = geoff::viz::LoadImage("../assets/"+map_name);
         std::cout<< "lodaded" << std::endl;
         cv::resize(raw_map, raw_map, cv::Size(1000, 1000), cv::INTER_LINEAR);
-        geoff::common::Vector2d pose = geoff::common::Vector2d(150,300,-2);
+        geoff::common::Vector2d pose = geoff::common::Vector2d(spawn[0],spawn[1],spawn[2]);
         geoff::viz::CreateWindow("test");
         
         // Create a new car and network.
