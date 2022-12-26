@@ -12,5 +12,6 @@ namespace viz{
     cv::Mat PlaceObject(cv::Mat map, cv::Mat obj, int x, int y, float angle);
     cv::Mat draw_circle(cv::Mat image, std::vector<std::pair<int, int>> points, int r, cv::Scalar color);
     cv::Mat draw_circle(cv::Mat image, int x, int y, int r, cv::Scalar color);
+    cv::Mat draw_circle(cv::Mat image, std::vector<std::vector<float>> points, int r, cv::Scalar color);
 }
 }

@@ -73,6 +73,20 @@ namespace viz{
         }
         return image;
     }
+
+    cv::Mat draw_circle(cv::Mat image, std::vector<std::vector<float>> points, int r, cv::Scalar color){
+        bool first = true;
+        for ( std::vector<float> point : points ){
+            cv::Point center = cv::Point(point[0],point[1]);
+            if (first){
+                cv::circle(image,center,r+5,color,-1);
+                first = false;
+            } else {
+                cv::circle(image,center,r+5,color,-1);
+            }
+        }
+        return image;
+    }
     cv::Mat draw_circle(cv::Mat image, int x, int y, int r, cv::Scalar color){
         cv::Point center = cv::Point(x,y);
         cv::circle(image,center,r,color,-1);

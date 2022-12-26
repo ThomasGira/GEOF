@@ -4,6 +4,9 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
 
 add_subdirectory(simulator)
 add_subdirectory(utils)
@@ -81,6 +84,7 @@ target_link_libraries( FFTrainer
                         PUBLIC feedforward
                         ${CURSES_LIBRARIES}
                         ${OpenCV_LIBS}
+                        Threads::Threads
                            )
 
 add_executable( Demo ${PROJECT_SOURCE_DIR}/simulator/demo.cc)

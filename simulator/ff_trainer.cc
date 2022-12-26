@@ -16,7 +16,6 @@ int main(int argc, char** argv )
 
     std::string map_name = setup["map"];
     std::vector<float> spawn = setup["spawn"];
-    std::vector<std::vector<float>> waypoints = setup["waypoints"];
     std::cout << "Map: " << map_name << std::endl;
     std::cout << "Spawn: " << std::to_string(spawn[0]) << ", " << std::to_string(spawn[1]) << ", " << std::to_string(spawn[2]) << std::endl;
     // Loop forever
@@ -48,6 +47,10 @@ int main(int argc, char** argv )
 
             int index = 0;
             int score = 0;
+
+            // Initialize waypoints
+            std::vector<std::vector<float>> waypoints = setup["waypoints"];
+
 
             // Loop through untill maximum iterations or collision.
             while (!(car.check_collision(raw_map)) & index < 100000){
@@ -82,6 +85,7 @@ int main(int argc, char** argv )
         }
         // Update best config.
         if (best.first > data["score"]){
+            data["score"] = best.first;
             best.second["score"] = best.first;
             std::cout << "Saving best Score: " << best.first << std::endl;
             myfile.open ("../feedforward/network.json");

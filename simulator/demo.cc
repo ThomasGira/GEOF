@@ -1,6 +1,7 @@
 #include"../utils/vectors.h"
 #include"../feedforward/network.h"
 #include"car.h"
+#include"visualizer.h"
 #include "../utils/json.hpp"
 using json = nlohmann::json;
 #include <time.h>
@@ -15,6 +16,7 @@ int main(int argc, char** argv )
 
     std::string map_name = setup["map"];
     std::vector<float> spawn = setup["spawn"];
+    std::vector<std::vector<float>> waypoints = setup["waypoints"];
     std::cout << "Map: " << map_name << std::endl;
     std::cout << "Spawn: " << std::to_string(spawn[0]) << ", " << std::to_string(spawn[1]) << ", " << std::to_string(spawn[2]) << std::endl;
     // Loop forever
@@ -42,6 +44,7 @@ int main(int argc, char** argv )
             geoff::common::Vector2d add_pose = geoff::common::Vector2d(outputs[0],0,(outputs[1]-0.5)/3);
             car.add_pose(add_pose);
             cv::Mat frame = car.draw();
+            frame = geoff::viz::draw_circle(frame,waypoints,10,cv::Scalar(150,0,0));
             geoff::viz::DisplayImage(frame,"test");
         }
     }
